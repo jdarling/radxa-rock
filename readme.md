@@ -66,9 +66,9 @@ Rock.getPinMode(pinNumber, [callback])
 
 Returns the mode the pin is currently in.  One of:
 
-  in - The pin is setup as an input
-  out - The pin is setup as an output
-  undefined - The pin isn't setup yet
+    in - The pin is setup as an input
+    out - The pin is setup as an output
+    undefined - The pin isn't setup yet
 
 License
 =======
