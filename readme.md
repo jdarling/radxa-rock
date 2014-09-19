@@ -13,6 +13,13 @@ pin 40(-) and see the LED alternate on and off opposite the 37/38 connection.
 See the reference/ folder for reference images and the led.sh file that started
 it all.
 
+Install
+=======
+
+```
+npm install radxa-rock
+```
+
 API
 ===
 
