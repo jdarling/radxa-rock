@@ -57,7 +57,9 @@ Will return an error if the pin is not in output mode.
 Rock.setPinMode(pinNumber, direction, [callback])
 -------------------------------------------------
 
-
+Sets the mode (in/out) for the specified pinNumber.  Returns once the pin's
+mode has been set if called sync fashion, or calls the callback when the mode
+is set if called in the async fashion.
 
 Rock.getPinMode(pinNumber, [callback])
 --------------------------------------
