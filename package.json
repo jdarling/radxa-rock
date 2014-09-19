@@ -1,0 +1,16 @@
+{
+  "name": "radxa-rock",
+  "version": "0.0.1",
+  "description": "GPIO interface for the Radxa Rock",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Radxa",
+    "Rock",
+    "GPIO"
+  ],
+  "author": "Jeremy Darling <jeremy.darling@gmail.com>",
+  "license": "MIT"
+}
