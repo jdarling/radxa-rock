@@ -13,6 +13,7 @@ var getStatus = function(pinNumber){
 
 var setStatus = function(pinNumber){
   return function(value, callback){
+    console.log('setStatus', pinNumber, value, callback);
     return rock.set(pinNumber, value, callback);
   };
 };

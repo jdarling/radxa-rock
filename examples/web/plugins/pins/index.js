@@ -43,9 +43,8 @@ var getPin = function(req, reply){
 
 var setPin = function(req, reply){
   var pinNumber = req.params.id;
-  var val = parseInt(req.params.value)||0;
+  var newVal = parseInt(req.params.value)||0;
   var pin = pins[pinNumber];
-console.log('set: ', pin, 'to', val);
   if(pin){
     var val = {
       pin: pin.pin,
@@ -58,7 +57,7 @@ console.log('set: ', pin, 'to', val);
         error: 'Pin '+pinNumber+' is not an output'
       });
     }
-    pin.set(val);
+    pin.set(newVal);
     val.value = pin.get();
     reply(val);
   }
