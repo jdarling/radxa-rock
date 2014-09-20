@@ -1,4 +1,4 @@
-var CONST = require('../../index').CONST;
+var CONST = require('../../../index').CONST;
 var reIsPort = /^J\d{1,2}_P\d{1,2}$/;
 var keys = Object.keys(CONST);
 var pins = {};
