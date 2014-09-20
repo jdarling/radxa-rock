@@ -13,7 +13,7 @@ var pinListing = function(req, reply){
         mode: pin.mode()
       };
       if(val.mode === 'in' || val.mode === 'out'){
-        val.value = val.get();
+        val.value = pin.get();
       }
       response.push(val);
     }
@@ -31,7 +31,7 @@ var getPin = function(req, reply){
       mode: pin.mode()
     };
     if(val.mode === 'in' || val.mode === 'out'){
-      val.value = val.get();
+      val.value = pin.get();
     }
     reply(val);
   }
@@ -45,6 +45,7 @@ var setPin = function(req, reply){
   var pinNumber = req.params.id;
   var val = parseInt(req.params.value)||0;
   var pin = pins[pinNumber];
+console.log('set: ', pin, 'to', val);
   if(pin){
     var val = {
       pin: pin.pin,
