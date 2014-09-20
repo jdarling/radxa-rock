@@ -1,0 +1,7 @@
+{
+  default: {
+    store: {
+      type: 'memory'
+    }
+  }
+}

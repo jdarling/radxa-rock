@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Hapi-base</title>
+    <link rel="stylesheet" href="/vendor/ink/css/ink.css">
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+  </head>
+  <body>
+    <nav class="ink-navigation">
+       <ul class="menu horizontal blue">
+          <li><a class="logoPlaceholder" href="#home" id="header_logo_text">Hapi-base</a></li>
+          <li><a href="#page2">Another page</a></li>
+          <li><a href="#markdown">Markdown page</a></li>
+       </ul>
+    </nav>
+
+    <div>
+      <div style="clear: both; height: 40px;"></div>
+      <div id="outlet"></div>
+      <div style="clear: both; height: 2em;"></div>
+    </div>
+
+    <footer>
+      Basic framework for Hapi.js projects
+    </footer>
+
+    <script type="text/x-template" id="loading">
+      <div style="text-align: center">
+        <div>Loading...</div>
+        <div class="loading"></div>
+      </div>
+    </script>
+    <script type="text/x-template" id="home" data-api="/api/v1/pins"><div class="ink-grid vertical-space">
+  {{#each this}}
+  <div>
+    {{names.[0]}}-&gt;{{mode}}={{value}}
+  </div>
+  {{/each}}
+</div>
+</script>
+    <script type="text/x-template" id="page2" nav="page2"><div data-controller="SampleController" data-content="Content from the controller, yeah!"></div>
+</script>
+    <script type="text/x-template" id="markdown" nav="markdown"><div data-controller="Markdown">
+Welcome
+=======
+
+This text is from Markdown.
+</div>
+</script>
+
+    <script type="text/javascript" src="/vendor/handlebars/handlebars.js"></script>
+    <script type="text/javascript" src="/vendor/satnav/dist/satnav.js"></script>
+    <script type="text/javascript" src="/vendor/async/async.js"></script>
+    <script type="text/javascript" src="/vendor/moment/moment.min.js"></script>
+    <script type="text/javascript" src="/vendor/markdown/markdown.js"></script>
+
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="/js/app.js"></script>
+  </body>
+</html>

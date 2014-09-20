@@ -1,0 +1,21 @@
+{
+  "name": "plugger",
+  "version": "0.0.0",
+  "description": "A generic plugin management system for Node.js",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "keywords": [
+    "plugin"
+  ],
+  "author": "Jeremy Darling <jeremy.darling@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^0.7.0",
+    "semver": "^2.3.0"
+  }
+}

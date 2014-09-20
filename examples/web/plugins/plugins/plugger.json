@@ -1,0 +1,6 @@
+{
+  name: "Plugins",
+  version: "0.0.0",
+  description: "Provides a list of loaded plugins",
+  main: "plugins.js"
+}
