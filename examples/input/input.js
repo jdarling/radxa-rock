@@ -11,6 +11,7 @@ var step = function(){
     }
     val = parseInt(val)||0;
     if(val!==pinVal){
+      console.log('Pin value changed from: ', pinVal, 'to', val);
       return rock.set(CONST.J15_P37, val, function(){
         pinVal = val;
         return process.nextTick(step);
@@ -21,7 +22,10 @@ var step = function(){
 };
 
 var start = function(){
-  return process.nextTick(step);
+  rock.set(CONST.J15_P37, 0, function(){
+    console.log('Ready, short pin to VDD through a resistor');
+    return process.nextTick(step);
+  });
 };
 
 var rock = new Rock({
