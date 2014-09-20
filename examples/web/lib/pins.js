@@ -11,6 +11,18 @@ var getStatus = function(pinNumber){
   };
 };
 
+var setStatus = function(pinNumber){
+  return function(value, callback){
+    return rock.set(pinNumber, value, callback);
+  };
+};
+
+var mode = function(pinNumber){
+  return function(mode, callback){
+    return rock.pinMode(pinNumber, mode, callback);
+  };
+};
+
 keys.forEach(function(key){
   if(key.match(reIsPort)){
     pinNumber = CONST[key];
@@ -18,7 +30,13 @@ keys.forEach(function(key){
       return;
     }
     if(!pins[pinNumber]){
-      pins[pinNumber] = {pin: pinNumber, keys: [], status: getStatus(pinNumber)};
+      pins[pinNumber] = {
+          pin: pinNumber,
+          keys: [],
+          get: getStatus(pinNumber),
+          set: setStatus(pinNumber),
+          mode: mode(pinNumber)
+        };
     }
     pins[pinNumber].keys.push(key);
     pins[key] = pins[pinNumber];
