@@ -1,0 +1,15 @@
+{
+  "name": "rock-web-example",
+  "version": "0.0.1",
+  "description": "Simple web server interface to the radxa rock GPIO",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeremy Darling <jeremy.darling@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bunyan": "^1.0.1",
+    "hapi": "^6.8.1"
+  }
+}
