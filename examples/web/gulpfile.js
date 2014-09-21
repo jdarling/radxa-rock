@@ -79,7 +79,8 @@ gulp.task('html', function(){
       });
     }
   }))
-  .pipe(replace(/{{&gt;/g, '{{>'))
+  .pipe(replace(/\{\{\&gt\;/g, '{{>'))
+  .pipe(replace(/\&apos\;/g, '\''))
   .pipe(gulp.dest('web/site'))
   ;
 });

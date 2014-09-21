@@ -450,7 +450,36 @@ var MarkdownController = function(container, data){
 
 controllers.register('Markdown', MarkdownController);
 
-},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/support.js":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/sample.js":[function(require,module,exports){
+},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/support.js":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/pincontroller.js":[function(require,module,exports){
+var controllers = require('../../lib/controllers.js');
+var handlebarsHelpers = require('../../lib/handlebarsHelpers');
+var support = require('../../lib/support');
+var Loader = require('../../lib/loader');
+
+var PinController = function(container, data){
+  var idx = container.dataset.index;
+  var pin = data[idx];
+  var template = Handlebars.compile(container.innerHTML);
+  var refresh = function(data){
+    container.innerHTML = template(data, {helpers: handlebarsHelpers});
+  };
+  container.addEventListener('change', function(e){
+    if(e.target && e.target.nodeName === 'SELECT'){
+      var target = (e.target.dataset.api||'').replace('{value}', support.val(e.target).toLowerCase());
+      Loader.post(target, function(err, data){
+        if(err){
+          return alert(err);
+        }
+        return refresh(data);
+      });
+    }
+  });
+  refresh(pin);
+};
+
+controllers.register('PinController', PinController);
+
+},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/rock/examples/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/sample.js":[function(require,module,exports){
 var controllers = require('../../lib/controllers.js');
 
 var SampleController = function(container, data){
@@ -2350,6 +2379,11 @@ var helpers = {
         return options.inverse(this);
     }
   },
+  option: function(value, setValue, options){
+    return value == setValue?
+      '<option value="'+value+'" SELECTED>'+options.fn(this)+'</options>'
+      :'<option value="'+value+'">'+options.fn(this)+'</options>';
+  },
 };
 var key;
 for(key in Handlebars.helpers){
@@ -2880,4 +2914,4 @@ module.exports = {
   }
 };
 
-},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/sample.js"]);
+},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js","./web/src/js/controllers/sample.js"]);

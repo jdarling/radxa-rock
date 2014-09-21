@@ -112,6 +112,11 @@ var helpers = {
         return options.inverse(this);
     }
   },
+  option: function(value, setValue, options){
+    return value == setValue?
+      '<option value="'+value+'" SELECTED>'+options.fn(this)+'</options>'
+      :'<option value="'+value+'">'+options.fn(this)+'</options>';
+  },
 };
 var key;
 for(key in Handlebars.helpers){

@@ -33,8 +33,22 @@
     </script>
     <script type="text/x-template" id="home" data-api="/api/v1/pins"><div class="ink-grid vertical-space">
   {{#each this}}
-  <div>
-    {{names.[0]}}-&gt;{{mode}}={{value}}
+  <div class="all-25" data-controller="PinController" data-index="{{@index}}">
+    <label>\{{names.[0]}}-&gt;</label>
+    <select data-pin="{{pin}}" data-api="/api/v1/pin/\{{pin}}/mode/{value}">
+      \{{#option 'undefined' mode}}Undefined\{{/option}}
+      \{{#option 'in' mode}}Input\{{/option}}
+      \{{#option 'out' mode}}Output\{{/option}}
+    </select>
+    \{{#ifCond mode '===' 'out'}}
+    <select data-pin="{{pin}}" data-api="/api/v1/pin/\{{pin}}/{value}">
+      \{{#option '0' value}}Off\{{/option}}
+      \{{#option '1' value}}On\{{/option}}
+    </select>
+    \{{/ifCond}}
+    \{{#ifCond mode '===' 'in'}}
+      \{{value}}
+    \{{/ifCond}}
   </div>
   {{/each}}
 </div>
