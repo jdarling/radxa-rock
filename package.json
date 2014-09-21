@@ -1,6 +1,6 @@
 {
   "name": "radxa-rock",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "GPIO interface for the Radxa Rock",
   "main": "index.js",
   "scripts": {
