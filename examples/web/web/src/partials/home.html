@@ -15,7 +15,7 @@
         \{{#option '1' value}}On\{{/option}}
       </select>
       \{{/ifCond}}
-      \{{#if value '>=' 1}}
+      \{{#if value '==' 1}}
         <span class="green ink-badge nobreak"><i class="fa fa-circle"></i> \{{value}}</span>
       \{{else}}
         \{{#ifCond value '==' 0}}
