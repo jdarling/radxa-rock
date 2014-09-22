@@ -486,7 +486,9 @@ var PinController = function(container, data){
         if(err){
           return alert(err);
         }
-        return refresh(data);
+        return setTimeout(function(){
+          return refresh(data);
+        }, 100);
       });
     }
   });
@@ -496,16 +498,7 @@ var PinController = function(container, data){
 
 controllers.register('PinController', PinController);
 
-},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/rock/examples/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/sample.js":[function(require,module,exports){
-var controllers = require('../../lib/controllers.js');
-
-var SampleController = function(container, data){
-  container.innerHTML = container.dataset.content;
-};
-
-controllers.register('SampleController', SampleController);
-
-},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js"}],"/home/jdarling/rock/examples/web/web/src/js/charts/bar.js":[function(require,module,exports){
+},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/rock/examples/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"/home/jdarling/rock/examples/web/web/src/js/charts/bar.js":[function(require,module,exports){
 module.exports = function Bar() {
   var
       margin = {top: 30, right: 10, bottom: 50, left: 50},
@@ -2931,4 +2924,4 @@ module.exports = {
   }
 };
 
-},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js","./web/src/js/controllers/sample.js"]);
+},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js"]);
