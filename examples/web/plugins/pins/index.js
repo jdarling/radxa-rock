@@ -85,13 +85,18 @@ var setPinMode = function(req, reply){
   var mode = req.params.mode;
   var pin = pins[pinNumber];
   if(pin){
-    var val = {
-      pin: pin.pin,
-      names: pin.keys,
-      mode: pin.mode(mode),
-      value: pin.get()
-    };
-    reply(val);
+    pin.mode(mode, function(err, mode){
+      if(err){
+        return reply(err);
+      }
+      var val = {
+        pin: pin.pin,
+        names: pin.keys,
+        mode: pin.mode(mode),
+        value: pin.get()
+      };
+      return reply(val);
+    });
   }
   return reply({
     root: 'error',
