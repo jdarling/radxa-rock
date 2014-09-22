@@ -1,21 +1,28 @@
-<div class="ink-grid vertical-space">
+<form class="ink-grid vertical-space ink-form">
   {{#each this}}
-  <div class="all-25" data-controller="PinController" data-index="{{@index}}">
-    <label>\{{names.[0]}}-&gt;</label>
-    <select data-pin="{{pin}}" data-api="/api/v1/pin/\{{pin}}/mode/{value}">
-      \{{#option 'undefined' mode}}Undefined\{{/option}}
-      \{{#option 'in' mode}}Input\{{/option}}
-      \{{#option 'out' mode}}Output\{{/option}}
-    </select>
-    \{{#ifCond mode '===' 'out'}}
-    <select data-pin="{{pin}}" data-api="/api/v1/pin/\{{pin}}/{value}">
-      \{{#option '0' value}}Off\{{/option}}
-      \{{#option '1' value}}On\{{/option}}
-    </select>
-    \{{/ifCond}}
-    \{{#ifCond mode '===' 'in'}}
-      \{{value}}
-    \{{/ifCond}}
+  <div class="all-25 extra-large-25 large-33 medium-50 small-100 tiny-100 control-group" data-controller="PinController" data-index="{{@index}}">
+    <div class="boxed">
+      <label>\{{names.[0]}}-&gt;
+        <select data-pin="{{pin}}" data-api="/api/v1/pin/\{{pin}}/mode/{value}">
+          \{{#option 'undefined' mode}}Undefined\{{/option}}
+          \{{#option 'in' mode}}Input\{{/option}}
+          \{{#option 'out' mode}}Output\{{/option}}
+        </select>
+      </label>
+      \{{#ifCond mode '===' 'out'}}
+      <select data-pin="{{pin}}" data-api="/api/v1/pin/\{{pin}}/{value}">
+        \{{#option '0' value}}Off\{{/option}}
+        \{{#option '1' value}}On\{{/option}}
+      </select>
+      \{{/ifCond}}
+      \{{#if value}}
+        <span class="green ink-badge nobreak"><i class="fa fa-circle"></i> \{{value}}</span>
+      \{{else}}
+        \{{#ifCond value '===' 0}}
+        <span class="black ink-badge nobreak"><i class="fa fa-circle"></i> \{{value}}</span>
+        \{{/ifCond}}
+      \{{/if}}
+    </div>
   </div>
   {{/each}}
-</div>
+</form>
