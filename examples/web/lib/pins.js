@@ -24,23 +24,21 @@ var mode = function(pinNumber){
 };
 
 keys.forEach(function(key){
-  if(key.match(reIsPort)){
-    pinNumber = CONST[key];
-    if(pinNumber === -1){
-      return;
-    }
-    if(!pins[pinNumber]){
-      pins[pinNumber] = {
-          pin: pinNumber,
-          keys: [],
-          get: getStatus(pinNumber),
-          set: setStatus(pinNumber),
-          mode: mode(pinNumber)
-        };
-    }
-    pins[pinNumber].keys.push(key);
-    pins[key] = pins[pinNumber];
+  pinNumber = CONST[key];
+  if(pinNumber === -1){
+    return;
   }
+  if(!pins[pinNumber]){
+    pins[pinNumber] = {
+        pin: pinNumber,
+        keys: [],
+        get: getStatus(pinNumber),
+        set: setStatus(pinNumber),
+        mode: mode(pinNumber)
+      };
+  }
+  pins[pinNumber].keys.push(key);
+  pins[key] = pins[pinNumber];
 });
 
 module.exports = pins;

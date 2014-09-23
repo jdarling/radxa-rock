@@ -26,7 +26,7 @@ var PinController = function(container, data){
     }
     return setTimeout(checkValue, 100);
   };
-  container.addEventListener('change', function(e){
+  var changeHandler = self.changeHandler = function(e){
     if(e.target && e.target.nodeName === 'SELECT'){
       var target = (e.target.dataset.api||'').replace('{value}', support.val(e.target).toLowerCase());
       Loader.post(target, function(err, data){
@@ -38,9 +38,15 @@ var PinController = function(container, data){
         }, 100);
       });
     }
-  });
+  };
+  container.addEventListener('change', changeHandler);
   refresh(data[idx]);
   checkValue();
+};
+
+PinController.teardown = function(container){
+  var self = this;
+  container.removeEventListener('change', self.changeHandler);
 };
 
 controllers.register('PinController', PinController);

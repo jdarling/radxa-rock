@@ -57,6 +57,9 @@ Rock.prototype.getPinMode = function(pinNumber, callback){
   if(callback){
     return callback(null, self._pins[pinNumber].mode||'undefined');
   }
+  if(!self._pins[pinNumber]){
+    return 'unavailable';
+  }
   return self._pins[pinNumber].mode||'undefined';
 };
 

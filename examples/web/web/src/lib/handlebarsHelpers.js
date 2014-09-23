@@ -14,6 +14,9 @@ var helpers = {
     }
     return result.join('');
   },
+  join: function(arr, joiner){
+    return arr.join(joiner);
+  },
   isComplex: function(obj){
     if(typeof(obj)==='object'){
       return true;

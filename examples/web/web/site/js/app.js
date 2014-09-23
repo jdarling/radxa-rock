@@ -479,7 +479,7 @@ var PinController = function(container, data){
     }
     return setTimeout(checkValue, 100);
   };
-  container.addEventListener('change', function(e){
+  var changeHandler = self.changeHandler = function(e){
     if(e.target && e.target.nodeName === 'SELECT'){
       var target = (e.target.dataset.api||'').replace('{value}', support.val(e.target).toLowerCase());
       Loader.post(target, function(err, data){
@@ -491,12 +491,72 @@ var PinController = function(container, data){
         }, 100);
       });
     }
-  });
+  };
+  container.addEventListener('change', changeHandler);
   refresh(data[idx]);
   checkValue();
 };
 
+PinController.teardown = function(container){
+  var self = this;
+  container.removeEventListener('change', self.changeHandler);
+};
+
 controllers.register('PinController', PinController);
+
+},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/rock/examples/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/pinfilter.js":[function(require,module,exports){
+var controllers = require('../../lib/controllers.js');
+var handlebarsHelpers = require('../../lib/handlebarsHelpers');
+var support = require('../../lib/support');
+var Loader = require('../../lib/loader');
+var els = support.els;
+var el = support.el;
+
+var PinFilterController = function(container, data){
+  var self = this;
+  var filterList = function(src){
+    var re = new RegExp(src, 'gi');
+    var boxes = els(container.parentNode, '[data-pins]');
+    boxes.forEach(function(box){
+      var pins = box.dataset.pins.split(',').map(function(s){
+        return s.trim();
+      }).join('\n');
+      box.className = box.className.replace(/(^|\W+)hidden(\W+|$)/gi, '').trim();
+      if(src && !pins.match(re)){
+        box.className = box.className + ' hidden';
+      }
+    });
+  };
+  var clickHandler = self.clickHandler = function(e){
+    if(e.target && e.target.nodeName === 'BUTTON'){
+      var val = support.val(el(container, '[role="search"] input'));
+      filterList(val);
+      e.preventDefault();
+      return false;
+    }
+  };
+  var keyHandler = self.keyHandler = function(e){
+    var code = e.key||e.keyCode;
+    if(!e.target){
+      return;
+    }
+    filterList(support.val(e.target));
+    if(code === 13){
+      e.preventDefault();
+      return false;
+    }
+  };
+  container.addEventListener('click', clickHandler);
+  container.addEventListener('keyup', keyHandler);
+};
+
+PinFilterController.teardown = function(container){
+  var self = this;
+  container.removeEventListener('click', self.clickHandler);
+  container.removeEventListener('keyup', self.keyHandler);
+};
+
+controllers.register('PinFilter', PinFilterController);
 
 },{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/rock/examples/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"/home/jdarling/rock/examples/web/web/src/js/charts/bar.js":[function(require,module,exports){
 module.exports = function Bar() {
@@ -2251,7 +2311,7 @@ var cleanupControllers = function (e) {
     }
     if(node.controller){
       if(node.controller.teardown){
-        node.controller.teardown();
+        node.controller.teardown(node);
       }
       delete node.controller;
     }
@@ -2290,6 +2350,9 @@ var helpers = {
       result.push(options.fn(ary[i]));
     }
     return result.join('');
+  },
+  join: function(arr, joiner){
+    return arr.join(joiner);
   },
   isComplex: function(obj){
     if(typeof(obj)==='object'){
@@ -2924,4 +2987,4 @@ module.exports = {
   }
 };
 
-},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js"]);
+},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js","./web/src/js/controllers/pinfilter.js"]);

@@ -32,16 +32,21 @@
       </div>
     </script>
     <script type="text/x-template" id="home" data-api="/api/v1/pins"><form class="ink-grid vertical-space ink-form">
+  <div class="control-group all-100" data-controller="PinFilter">
+    <div class="control append-button" role="search">
+      <span><input type="text" placeholder="Filter"></span>
+      <button class="ink-button"><i class="fa fa-search"></i></button>
+    </div>
+  </div>
   {{#each this}}
-  <div class="all-25 extra-large-25 large-33 medium-50 small-100 tiny-100 control-group" data-controller="PinController" data-index="{{@index}}">
+  <div class="all-25 extra-large-25 large-33 medium-50 small-100 tiny-100 control-group pin pin-{{pin}}" data-controller="PinController" data-index="{{@index}}" data-pins="{{join names ', '}}">
     <div class="boxed">
-      <label>\{{names.[0]}}-&gt;
+      <label class="tooltip" tip="\{{join names ', '}}">{{names.[1]}}</label>
         <select data-pin="{{pin}}" data-api="/api/v1/pin/\{{pin}}/mode/{value}">
           \{{#option 'undefined' mode}}Undefined\{{/option}}
           \{{#option 'in' mode}}Input\{{/option}}
           \{{#option 'out' mode}}Output\{{/option}}
         </select>
-      </label>
       \{{#ifCond mode '===' 'out'}}
       <select data-pin="{{pin}}" data-api="/api/v1/pin/\{{pin}}/{value}">
         \{{#option '0' value}}Off\{{/option}}

@@ -1,35 +1,40 @@
 var pins = require('../../lib/pins');
-var keys = Object.keys(pins);
 var reIsNumeric = /^\d+$/;
-
 var reSplitKey = /^J(\d+)_P(\d+)$/;
-var sortKeys = function(a, b){
-  var key1 = pins[a].keys[0];
-  var key2 = pins[b].keys[0];
-  var m1 = key1.match(reSplitKey);
-  var m2 = key2.match(reSplitKey);
-  if(m1[1]===m2[1]){
-    return parseInt(m1[2])-parseInt(m2[2]);
-  }
-  return parseInt(m1[1])-parseInt(m2[1]);
-};
-keys = keys.sort(sortKeys);
+var keys = (function(){
+  var sortKeys = function(key1, key2){
+    var m1 = key1.match(reSplitKey);
+    var m2 = key2.match(reSplitKey);
+    if(m1[1]===m2[1]){
+      return parseInt(m1[2])-parseInt(m2[2]);
+    }
+    return parseInt(m1[1])-parseInt(m2[1]);
+  };
+  var keys = Object.keys(pins);
+  var result = [], _pins = [], pin;
+  keys.forEach(function(key){
+    pin = pins[key].pin;
+    if(_pins.indexOf(pin)===-1 && key.match(reSplitKey)){
+      result.push(key);
+      _pins.push(pin);
+    }
+  });
+  return result.sort(sortKeys);
+})();
 
 var pinListing = function(req, reply){
   var response = [], pin, val;
   keys.forEach(function(key){
-    if(key.match(reIsNumeric)){
-      pin = pins[key];
-      val = {
-        pin: pin.pin,
-        names: pin.keys,
-        mode: pin.mode()
-      };
-      if(val.mode === 'in' || val.mode === 'out'){
-        val.value = pin.get();
-      }
-      response.push(val);
+    pin = pins[key];
+    val = {
+      pin: pin.pin,
+      names: pin.keys,
+      mode: pin.mode()
+    };
+    if(val.mode === 'in' || val.mode === 'out'){
+      val.value = pin.get();
     }
+    response.push(val);
   });
   reply(response);
 };

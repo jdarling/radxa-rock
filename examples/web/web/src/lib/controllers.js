@@ -36,7 +36,7 @@ var cleanupControllers = function (e) {
     }
     if(node.controller){
       if(node.controller.teardown){
-        node.controller.teardown();
+        node.controller.teardown(node);
       }
       delete node.controller;
     }
