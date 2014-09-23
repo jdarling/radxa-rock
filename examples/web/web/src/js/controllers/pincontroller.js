@@ -4,6 +4,7 @@ var support = require('../../lib/support');
 var Loader = require('../../lib/loader');
 
 var PinController = function(container, data){
+  var self = this;
   var idx = container.dataset.index;
   var template = Handlebars.compile(container.innerHTML);
   var oldValue, pin;
@@ -21,10 +22,10 @@ var PinController = function(container, data){
         if(oldValue!==data.value){
           refresh(data);
         }
-        return setTimeout(checkValue, 100);
+        return self.timer = setTimeout(checkValue, 100);
       });
     }
-    return setTimeout(checkValue, 100);
+    return self.timer = setTimeout(checkValue, 100);
   };
   var changeHandler = self.changeHandler = function(e){
     if(e.target && e.target.nodeName === 'SELECT'){
@@ -44,8 +45,11 @@ var PinController = function(container, data){
   checkValue();
 };
 
-PinController.teardown = function(container){
+PinController.prototype.teardown = function(container){
   var self = this;
+  if(self.timer){
+    clearTimeout(self.timer);
+  }
   container.removeEventListener('change', self.changeHandler);
 };
 

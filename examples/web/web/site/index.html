@@ -6,12 +6,14 @@
     <title>Radxa Rock Web Interface</title>
     <link rel="stylesheet" href="/vendor/ink/css/ink.css">
     <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="/style/style.css">
   </head>
   <body>
     <nav class="ink-navigation">
        <ul class="menu horizontal blue">
           <li><a class="logoPlaceholder" href="#home" id="header_logo_text">RR-Web</a></li>
+          <li><a href="#script">Script</a></li>
        </ul>
     </nav>
 
@@ -65,12 +67,16 @@
   {{/each}}
 </form>
 </script>
+    <script type="text/x-template" id="script" data-api="/api/v1/script" nav="script"><textarea data-controller="CodeMirror">{{this}}</textarea>
+</script>
 
     <script type="text/javascript" src="/vendor/handlebars/handlebars.js"></script>
     <script type="text/javascript" src="/vendor/satnav/dist/satnav.js"></script>
     <script type="text/javascript" src="/vendor/async/async.js"></script>
     <script type="text/javascript" src="/vendor/moment/moment.min.js"></script>
     <script type="text/javascript" src="/vendor/markdown/markdown.js"></script>
+    <script type="text/javascript" src="/vendor/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="/vendor/codemirror/mode/javascript/javascript.js"></script>
 
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 

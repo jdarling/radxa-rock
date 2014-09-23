@@ -385,7 +385,21 @@ TableViewController.prototype.update = function(data){
 
 require('../../../lib/controllers').register('TableView', TableViewController);
 
-},{"../../../lib/charts":"/home/jdarling/rock/examples/web/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../charts/table.js":"/home/jdarling/rock/examples/web/web/src/js/charts/table.js"}],"./web/src/js/controllers/markdown.js":[function(require,module,exports){
+},{"../../../lib/charts":"/home/jdarling/rock/examples/web/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../charts/table.js":"/home/jdarling/rock/examples/web/web/src/js/charts/table.js"}],"./web/src/js/controllers/codemirror.js":[function(require,module,exports){
+var controllers = require('../../lib/controllers.js');
+
+var CodeMirrorController = function(container, data){
+  var editor = CodeMirror.fromTextArea(container, {
+    mode: "javascript",
+    lineNumbers: true,
+    styleActiveLine: true,
+    matchBrackets: true
+  });
+};
+
+controllers.register('CodeMirror', CodeMirrorController);
+
+},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js"}],"./web/src/js/controllers/markdown.js":[function(require,module,exports){
 var controllers = require('../../lib/controllers.js');
 var Support = require('../../lib/support.js');
 var el = Support.el;
@@ -457,6 +471,7 @@ var support = require('../../lib/support');
 var Loader = require('../../lib/loader');
 
 var PinController = function(container, data){
+  var self = this;
   var idx = container.dataset.index;
   var template = Handlebars.compile(container.innerHTML);
   var oldValue, pin;
@@ -474,10 +489,10 @@ var PinController = function(container, data){
         if(oldValue!==data.value){
           refresh(data);
         }
-        return setTimeout(checkValue, 100);
+        return self.timer = setTimeout(checkValue, 100);
       });
     }
-    return setTimeout(checkValue, 100);
+    return self.timer = setTimeout(checkValue, 100);
   };
   var changeHandler = self.changeHandler = function(e){
     if(e.target && e.target.nodeName === 'SELECT'){
@@ -497,8 +512,11 @@ var PinController = function(container, data){
   checkValue();
 };
 
-PinController.teardown = function(container){
+PinController.prototype.teardown = function(container){
   var self = this;
+  if(self.timer){
+    clearTimeout(self.timer);
+  }
   container.removeEventListener('change', self.changeHandler);
 };
 
@@ -555,7 +573,7 @@ var PinFilterController = function(container, data){
   container.addEventListener('keyup', keyHandler);
 };
 
-PinFilterController.teardown = function(container){
+PinFilterController.prototype.teardown = function(container){
   var self = this;
   container.removeEventListener('click', self.clickHandler);
   container.removeEventListener('keyup', self.keyHandler);
@@ -2305,7 +2323,7 @@ Controllers.prototype.register = function(controllerName, controller){
   this._controllers[controllerName] = controller;
 };
 
-var cleanupControllers = function (e) {
+var cleanupControllers = function(node){
   var walkForRemoval = function(node){
     if(node && node.children){
       var i, l = node.children.length, child;
@@ -2321,10 +2339,7 @@ var cleanupControllers = function (e) {
       node.controller = null;
     }
   };
-  if(e.type=='DOMNodeRemoved'){
-    var n = e.target;
-    walkForRemoval(n);
-  }
+  walkForRemoval(node);
 };
 
 if(typeof(MutationObserver)!=='undefined'){
@@ -2336,7 +2351,11 @@ if(typeof(MutationObserver)!=='undefined'){
   });
   observer.observe(document.body, { childList: true, subtree: true });
 }else{
-  document.body.addEventListener('DOMNodeRemoved', cleanupControllers, true);
+  document.body.addEventListener('DOMNodeRemoved', function(e){
+    if(e.type=='DOMNodeRemoved'){
+      cleanupControllers(e.target);
+    }
+  }, true);
 }
 
 var controllers = new Controllers();
@@ -2995,4 +3014,4 @@ module.exports = {
   }
 };
 
-},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js","./web/src/js/controllers/pinfilter.js"]);
+},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/codemirror.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js","./web/src/js/controllers/pinfilter.js"]);

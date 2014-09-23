@@ -25,7 +25,7 @@ Controllers.prototype.register = function(controllerName, controller){
   this._controllers[controllerName] = controller;
 };
 
-var cleanupControllers = function (e) {
+var cleanupControllers = function(node){
   var walkForRemoval = function(node){
     if(node && node.children){
       var i, l = node.children.length, child;
@@ -41,10 +41,7 @@ var cleanupControllers = function (e) {
       node.controller = null;
     }
   };
-  if(e.type=='DOMNodeRemoved'){
-    var n = e.target;
-    walkForRemoval(n);
-  }
+  walkForRemoval(node);
 };
 
 if(typeof(MutationObserver)!=='undefined'){
@@ -56,7 +53,11 @@ if(typeof(MutationObserver)!=='undefined'){
   });
   observer.observe(document.body, { childList: true, subtree: true });
 }else{
-  document.body.addEventListener('DOMNodeRemoved', cleanupControllers, true);
+  document.body.addEventListener('DOMNodeRemoved', function(e){
+    if(e.type=='DOMNodeRemoved'){
+      cleanupControllers(e.target);
+    }
+  }, true);
 }
 
 var controllers = new Controllers();

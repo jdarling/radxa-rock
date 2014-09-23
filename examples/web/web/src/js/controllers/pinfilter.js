@@ -48,7 +48,7 @@ var PinFilterController = function(container, data){
   container.addEventListener('keyup', keyHandler);
 };
 
-PinFilterController.teardown = function(container){
+PinFilterController.prototype.teardown = function(container){
   var self = this;
   container.removeEventListener('click', self.clickHandler);
   container.removeEventListener('keyup', self.keyHandler);
