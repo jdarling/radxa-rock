@@ -522,6 +522,11 @@ var PinFilterController = function(container, data){
         return s.trim();
       }).join('\n');
       box.className = box.className.replace(/(^|\W+)hidden(\W+|$)/gi, '').trim();
+      els(box, 'select').forEach(function(elem){
+        if(elem.selectedIndex !== -1){
+          pins += '\n'+elem.options[elem.selectedIndex].text;
+        }
+      });
       if(src && !pins.match(re)){
         box.className = box.className + ' hidden';
       }
