@@ -38,7 +38,7 @@ var cleanupControllers = function (e) {
       if(node.controller.teardown){
         node.controller.teardown(node);
       }
-      delete node.controller;
+      node.controller = null;
     }
   };
   if(e.type=='DOMNodeRemoved'){
@@ -49,9 +49,12 @@ var cleanupControllers = function (e) {
 
 if(typeof(MutationObserver)!=='undefined'){
   var observer = new MutationObserver(function(mutations){
-    mutations.forEach(cleanupControllers);
+    mutations.forEach(function(mutation){
+      var removed = mutation.removedNodes?Array.prototype.slice.apply(mutation.removedNodes):[];
+      removed.forEach(cleanupControllers);
+    });
   });
-  observer.observe(document.body, { childList: true });
+  observer.observe(document.body, { childList: true, subtree: true });
 }else{
   document.body.addEventListener('DOMNodeRemoved', cleanupControllers, true);
 }
