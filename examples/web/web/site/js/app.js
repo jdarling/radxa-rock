@@ -387,19 +387,22 @@ require('../../../lib/controllers').register('TableView', TableViewController);
 
 },{"../../../lib/charts":"/home/jdarling/rock/examples/web/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../charts/table.js":"/home/jdarling/rock/examples/web/web/src/js/charts/table.js"}],"./web/src/js/controllers/codemirror.js":[function(require,module,exports){
 var controllers = require('../../lib/controllers.js');
+var support = require('../../lib/support');
+var el = support.el;
 
 var CodeMirrorController = function(container, data){
   var editor = CodeMirror.fromTextArea(container, {
     mode: "javascript",
     lineNumbers: true,
     styleActiveLine: true,
-    matchBrackets: true
+    matchBrackets: true,
+    viewportMargin: Infinity
   });
 };
 
 controllers.register('CodeMirror', CodeMirrorController);
 
-},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js"}],"./web/src/js/controllers/markdown.js":[function(require,module,exports){
+},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/markdown.js":[function(require,module,exports){
 var controllers = require('../../lib/controllers.js');
 var Support = require('../../lib/support.js');
 var el = Support.el;
