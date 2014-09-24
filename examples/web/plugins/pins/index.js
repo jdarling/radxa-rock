@@ -117,7 +117,7 @@ var pinChanged = function(sockets){
       pin: pinNumber,
       value: newValue
     });
-    sockets.broadcast('pin'+pinNumber+':change', value);
+    sockets.broadcast('pin'+pinNumber+':change', newValue);
   };
 };
 
