@@ -1,11 +1,13 @@
-<nav class="ink-navigation">
-  <ul class="menu horizontal dark">
-    <li><button data-action="new" tip="Clear" class="tooltip below ink-button dark"><span class="fa fa-file-o"></span></button></li>
-    <li><button data-action="open" tip="Load from local" class="tooltip below ink-button dark"><span class="fa fa-folder-open-o"></span></button></li>
-    <li><button data-action="save" tip="Save to server" class="tooltip below ink-button dark"><span class="fa fa-save"></span></button></li>
-    <li><button data-action="syntax" tip="Syntax check code" class="tooltip below ink-button dark"><span class="fa fa-check-circle-o"></span></button></li>
-    <li><button data-action="execute" tip="Execute code on RR" class="tooltip below ink-button dark"><span class="fa fa-play-circle-o"></span></button></li>
-  </ul>
-</nav>
+<div data-controller="ScriptEditor">
+  <nav class="ink-navigation">
+    <ul class="menu horizontal dark">
+      <li><button data-action="clear" tip="Clear" class="tooltip below ink-button dark"><span class="fa fa-file-o"></span></button></li>
+      <li><button data-action="open" tip="Load from local" class="tooltip below ink-button dark"><span class="fa fa-folder-open-o"></span></button></li>
+      <li><button data-action="save" tip="Save to server" class="tooltip below ink-button dark"><span class="fa fa-save"></span></button></li>
+      <li><button data-action="syntax" tip="Syntax check code" class="tooltip below ink-button dark"><span class="fa fa-check-circle-o"></span></button></li>
+      <li><button data-action="execute" tip="Execute code on RR" class="tooltip below ink-button dark"><span class="fa fa-play-circle-o"></span></button></li>
+    </ul>
+  </nav>
 
-<textarea data-controller="CodeMirror">{{this}}</textarea>
+  <textarea data-controller="CodeMirror">{{this}}</textarea>
+</div>

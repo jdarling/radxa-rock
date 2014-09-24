@@ -3,7 +3,7 @@ var vm = require('vm');
 var rock = require('../../lib/rock');
 var CONST = require('../../../../index').CONST;
 
-var source = '// Put your source here\n\n'+
+var SOURCE = '// Put your source here\n\n'+
       'rock.setPinMode(J12_P37, \'output\', function(){\n'+
       '  rock.set(J12_P37, 1, function(){\n'+
       '    setTimeout(function(){\n'+
@@ -13,11 +13,11 @@ var source = '// Put your source here\n\n'+
       '});\n';
 
 var getScript = function(req, reply){
-  fs.readFile('./script.js', function(err, script){
+  fs.readFile(__dirname+'/scripts/script.js', function(err, script){
     if(err){
       return reply({
         root: 'script',
-        script: source
+        script: SOURCE
       });
     }
     return reply({
@@ -28,14 +28,22 @@ var getScript = function(req, reply){
 };
 
 var updateScript = function(req, reply){
-  source = req.payload;
-  reply({
-    root: 'script',
-    script: source
+  var source = req.payload;
+  fs.writeFile(__dirname+'/scripts/script.js', function(err, script){
+    if(err){
+      return reply({
+        root: 'error',
+        error: err.stack||err
+      });
+    }
+    return reply({
+      root: 'script',
+      script: source
+    });
   });
 };
 
-var activateScript = function(req, reply){
+var executeScript = function(req, reply){
   var source = req.payload;
   var sandbox = {
     rock: rock,
@@ -80,8 +88,8 @@ module.exports = function(options, next){
     },
     {
       method: 'POST',
-      path: config.route+(config.path||'script/activate'),
-      handler: activateScript
+      path: config.route+(config.path||'script/execute'),
+      handler: executeScript
     }
   ]);
   next();

@@ -391,13 +391,19 @@ var support = require('../../lib/support');
 var el = support.el;
 
 var CodeMirrorController = function(container, data){
-  var editor = CodeMirror.fromTextArea(container, {
+  var self = this;
+  var editor = self.editor = CodeMirror.fromTextArea(container, {
     mode: "javascript",
     lineNumbers: true,
     styleActiveLine: true,
     matchBrackets: true,
     viewportMargin: Infinity
   });
+};
+
+CodeMirrorController.prototype.teardown = function(){
+  var self = this;
+  self.editor = null;
 };
 
 controllers.register('CodeMirror', CodeMirrorController);
@@ -583,6 +589,71 @@ PinFilterController.prototype.teardown = function(container){
 };
 
 controllers.register('PinFilter', PinFilterController);
+
+},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/rock/examples/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/scripteditor.js":[function(require,module,exports){
+var controllers = require('../../lib/controllers.js');
+var handlebarsHelpers = require('../../lib/handlebarsHelpers');
+var support = require('../../lib/support');
+var Loader = require('../../lib/loader');
+var els = support.els;
+var el = support.el;
+
+var ScriptEditorController = function(container, data){
+  var self = this;
+  var actions = {
+    clear: function(src, editor){
+      editor.setValue('');
+    },
+    open: function(){
+
+    },
+    save: function(src){
+
+    },
+    syntax: function(src){
+      try{
+        var f = new Function(src);
+        alert('All good!');
+      }catch(e){
+        alert(e.stack||e);
+      }
+    },
+    execute: function(src){
+      Loader.post('/api/v1/script/execute', {data: src}, function(err, data){
+        if(err){
+          return alert(err.stack||err);
+        }
+        console.log(data);
+        alert('All done!');
+      });
+    },
+  };
+  var clickHandler = self.clickHandler = function(e){
+    if(e.target && e.target.dataset.action){
+      var action = e.target.dataset.action;
+      var f = actions[action];
+      if(f){
+        var editor = el(container, 'textarea').controller.editor;
+        f(editor.getValue(), editor);
+        e.preventDefault();
+        return false;
+      }
+    }
+  };
+  var keyHandler = self.keyHandler = function(e){
+    // don't quite know what to do here yet
+  };
+  container.addEventListener('click', clickHandler);
+  container.addEventListener('keyup', keyHandler);
+};
+
+ScriptEditorController.prototype.teardown = function(container){
+  var self = this;
+  container.removeEventListener('click', self.clickHandler);
+  container.removeEventListener('keyup', self.keyHandler);
+};
+
+controllers.register('ScriptEditor', ScriptEditorController);
 
 },{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/rock/examples/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"/home/jdarling/rock/examples/web/web/src/js/charts/bar.js":[function(require,module,exports){
 module.exports = function Bar() {
@@ -3017,4 +3088,4 @@ module.exports = {
   }
 };
 
-},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/codemirror.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js","./web/src/js/controllers/pinfilter.js"]);
+},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/codemirror.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js","./web/src/js/controllers/pinfilter.js","./web/src/js/controllers/scripteditor.js"]);
