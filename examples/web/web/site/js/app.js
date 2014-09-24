@@ -659,7 +659,7 @@ var ScriptEditorController = function(container, data){
         if(err){
           return alert(err.stack||err.error||err);
         }
-        alert('All done!');
+        alert('Running...');
       });
     },
   };

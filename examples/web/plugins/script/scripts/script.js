@@ -1,10 +1,11 @@
 // Put your source here
 
+var pin = rock.pin(J12_P37);
 var toggle = function(duration){
       return function(next){
-        rock.set(J12_P37, 1, function(){
+        pin.set(1, function(){
           setTimeout(function(){
-            rock.set(J12_P37, 0);
+            pin.set(0);
             setTimeout(next, duration||100);
           }, duration||100);
         });
@@ -27,6 +28,6 @@ var next = function(){
   }
 };
 
-rock.setPinMode(J12_P37, 'output', function(){
+pin.mode('output', function(){
   next();
 });

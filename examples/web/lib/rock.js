@@ -14,6 +14,7 @@ console.log('NOTE: '+CONST.GPIO_PATH+' is not available, running in simulation m
 
 var reIsPort = /^J\d{1,2}_P\d{1,2}$/;
 var keys = Object.keys(CONST);
+var Pin = require('../../../index').Pin;
 
 var Rock = function(options, callback){
   var self = this, pinNumber;
@@ -34,6 +35,10 @@ var Rock = function(options, callback){
   if(callback){
     return callback(null, this);
   }
+};
+
+Rock.prototype.pin = function(pinNumber){
+  return new Pin(pinNumber);
 };
 
 Rock.prototype.export = function(pinNumber, callback){
