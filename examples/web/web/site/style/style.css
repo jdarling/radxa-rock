@@ -51,6 +51,29 @@
   position: absolute;
   z-index: 99;
 }
+.tooltip.below:hover:after {
+  background: #333;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  bottom: -32px;
+  color: #fff;
+  content: attr(tip);
+  left: 20%;
+  padding: 5px 15px;
+  position: absolute;
+  z-index: 98;
+  width: 220px;
+}
+.tooltip.below:hover:before {
+  border: solid;
+  border-color: #333 transparent;
+  border-width: 0 6px 6px 6px;
+  bottom: 0px;
+  content: "";
+  left: 50%;
+  position: absolute;
+  z-index: 99;
+}
 .ink-form select {
   padding: 0px;
 }
