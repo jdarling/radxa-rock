@@ -35,9 +35,11 @@ var PinController = function(container, data){
         if(err){
           return alert(err);
         }
+        /*
         return setTimeout(function(){
           return refresh(data);
         }, 100);
+        */
       });
     }
   };
