@@ -77,6 +77,52 @@ Returns the mode the pin is currently in.  One of:
     out - The pin is setup as an output
     undefined - The pin isn't setup yet
 
+Rock.mode(pinNumber, [mode] [callback])
+--------------------------------
+
+Sets or gets the Pin Number's mode.
+
+    pinNumber - What pin to check or set
+    mode - optional, if there then mode will be set to it
+    callback - called with the result
+
+radxa-rock.Pin()
+----------------
+
+Constructor for a new Pin object.  The Pin object provides streamlined
+integration of the Rock's IO Pins.  Can be used instead of passing in the pin
+number to each Rock call.  Later may be extended to implement something like
+polling.  Will more than likely replace the Rock objects internal callers to
+make sure there is only one accessor of the Pin's.
+
+Pin.mode([mode], [callback])
+----------------------------
+
+Get or set the underlying Pin's mode.  If mode is passed in then the pin will
+be set to the new mode.
+
+If callback is passed then the result will be returned to the callback.
+
+Pin.get([callback])
+-------------------
+
+Get the current value of the underlying Pin.
+
+If callback is provided then return the value to the callback, if callback is
+not provided then return the value.
+
+Pin.set(value, [callback])
+--------------------------
+
+Set the value of the current underlying Pin.  Call the optional callback with
+the value once it's set.
+
+Pin.val([value], [callback])
+----------------------------
+
+Shortcut to get/set the current value of the underling Pin.  If value is passed
+then calls Pin.set(value, callback), otherwise calls Pin.get(callback).
+
 License
 =======
 
