@@ -17,18 +17,26 @@ var ScriptEditorController = function(container, data){
     save: function(src){
 
     },
+    import: function(){
+
+    },
+    export: function(src){
+
+    },
     syntax: function(src){
       try{
         var f = new Function(src);
         alert('All good!');
       }catch(e){
-        alert(e.stack||e);
+        console.log(e);
+        alert(e.stack||e.error||e);
       }
     },
     execute: function(src){
       Loader.post('/api/v1/script/execute', {data: src}, function(err, data){
         if(err){
-          return alert(err.stack||err);
+          console.log(err);
+          return alert(err.stack||err.error||err);
         }
         console.log(data);
         alert('All done!');
