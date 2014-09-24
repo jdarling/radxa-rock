@@ -29,7 +29,7 @@ var getScript = function(req, reply){
 
 var updateScript = function(req, reply){
   var source = req.payload;
-  fs.writeFile(__dirname+'/scripts/script.js', function(err, script){
+  fs.writeFile(__dirname+'/scripts/script.js', source, function(err, script){
     if(err){
       return reply({
         root: 'error',

@@ -604,34 +604,61 @@ var ScriptEditorController = function(container, data){
     clear: function(src, editor){
       editor.setValue('');
     },
-    open: function(){
-
+    open: function(src, editor){
+      Loader.get('/api/v1/script', function(err, response){
+        if(err){
+          return alert(err.stack||err.error||err);
+        }
+        editor.setValue(response);
+      });
     },
-    save: function(src){
-
+    save: function(src, editor){
+      Loader.post('/api/v1/script', {data: src}, function(err, source){
+        if(err){
+          return alert(err.stack||err.error||err);
+        }
+        editor.setValue(source);
+        alert('Saved');
+      });
     },
-    import: function(){
-
+    import: function(src, editor){
+      var frm = document.createElement('form');
+      var finput = document.createElement('input');
+      finput.name='uploadfile';
+      frm.method='POST';
+      frm.action='/api/v1/proxy/loader';
+      frm.appendChild(finput);
+      finput.type='file';
+      finput.onchange = function(){
+        Loader.postForm(frm, function(err, response){
+          if(err){
+            return alert(err.stack||err.error||err);
+          }
+          editor.setValue(response);
+        });
+      };
+      finput.click();
     },
     export: function(src){
-
+      var link = document.createElement('a');
+      link.name= 'source.js';
+      link.href= 'data:application/javascript,'+encodeURIComponent(src);
+      link.target= '_blank';
+      link.click();
     },
     syntax: function(src){
       try{
         var f = new Function(src);
         alert('All good!');
       }catch(e){
-        console.log(e);
         alert(e.stack||e.error||e);
       }
     },
     execute: function(src){
       Loader.post('/api/v1/script/execute', {data: src}, function(err, data){
         if(err){
-          console.log(err);
           return alert(err.stack||err.error||err);
         }
-        console.log(data);
         alert('All done!');
       });
     },

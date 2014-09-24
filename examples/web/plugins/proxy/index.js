@@ -21,6 +21,10 @@ var routeConfig = {
   }
 };
 
+var proxyLoader = function(req, reply){
+  reply(req.payload.uploadfile?req.payload.uploadfile:req.payload);
+};
+
 module.exports = function(options, next){
 	var config = options.config;
   var server = options.hapi;
@@ -34,6 +38,11 @@ module.exports = function(options, next){
       method: 'POST',
       path: config.route + 'proxy',
       config: routeConfig
+    },
+    {
+      method: 'POST',
+      path: config.route + 'proxy/loader',
+      handler: proxyLoader
     },
     {
       method: 'PUT',
