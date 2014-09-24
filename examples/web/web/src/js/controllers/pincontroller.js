@@ -2,6 +2,7 @@ var controllers = require('../../lib/controllers.js');
 var handlebarsHelpers = require('../../lib/handlebarsHelpers');
 var support = require('../../lib/support');
 var Loader = require('../../lib/loader');
+var sockets = require('../../lib/sockets');
 
 var PinController = function(container, data){
   var self = this;
@@ -40,9 +41,14 @@ var PinController = function(container, data){
       });
     }
   };
+  var pinChanged = self.pinChanged = function(value){
+    pin.value = value;
+    refresh(pin);
+  };
   container.addEventListener('change', changeHandler);
   refresh(data[idx]);
-  checkValue();
+  //checkValue();
+  sockets.on('pin'+pin.pin+':change', pinChanged);
 };
 
 PinController.prototype.teardown = function(container){
@@ -51,6 +57,7 @@ PinController.prototype.teardown = function(container){
     clearTimeout(self.timer);
   }
   container.removeEventListener('change', self.changeHandler);
+  sockets.removeListener('pin'+pin.pin+':change', self.pinChanged);
 };
 
 controllers.register('PinController', PinController);

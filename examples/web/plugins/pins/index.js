@@ -1,6 +1,8 @@
 var pins = require('../../lib/pins');
 var reIsNumeric = /^\d+$/;
 var reSplitKey = /^J(\d+)_P(\d+)$/;
+var Pin = require('../../../../index').Pin;
+
 var keys = (function(){
   var sortKeys = function(key1, key2){
     var m1 = key1.match(reSplitKey);
@@ -109,9 +111,20 @@ var setPinMode = function(req, reply){
   });
 };
 
+var pinChanged = function(sockets){
+  return function(pinNumber, newValue, oldValue){
+    sockets.broadcast('pin:change', {
+      pin: pinNumber,
+      value: newValue
+    });
+    sockets.broadcast('pin'+pinNumber+':change', value);
+  };
+};
+
 module.exports = function(options, next){
   var config = options.config;
   var server = options.hapi;
+  Pin.emitter.on('pin:change', pinChanged(options.sockets));
   server.route([
     {
       method: 'GET',

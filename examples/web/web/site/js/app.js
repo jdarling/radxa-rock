@@ -478,6 +478,7 @@ var controllers = require('../../lib/controllers.js');
 var handlebarsHelpers = require('../../lib/handlebarsHelpers');
 var support = require('../../lib/support');
 var Loader = require('../../lib/loader');
+var sockets = require('../../lib/sockets');
 
 var PinController = function(container, data){
   var self = this;
@@ -516,9 +517,14 @@ var PinController = function(container, data){
       });
     }
   };
+  var pinChanged = self.pinChanged = function(value){
+    pin.value = value;
+    refresh(pin);
+  };
   container.addEventListener('change', changeHandler);
   refresh(data[idx]);
-  checkValue();
+  //checkValue();
+  sockets.on('pin'+pin.pin+':change', pinChanged);
 };
 
 PinController.prototype.teardown = function(container){
@@ -527,11 +533,12 @@ PinController.prototype.teardown = function(container){
     clearTimeout(self.timer);
   }
   container.removeEventListener('change', self.changeHandler);
+  sockets.removeListener('pin'+pin.pin+':change', self.pinChanged);
 };
 
 controllers.register('PinController', PinController);
 
-},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/rock/examples/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/pinfilter.js":[function(require,module,exports){
+},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/rock/examples/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../../lib/sockets":"/home/jdarling/rock/examples/web/web/src/lib/sockets.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/pinfilter.js":[function(require,module,exports){
 var controllers = require('../../lib/controllers.js');
 var handlebarsHelpers = require('../../lib/handlebarsHelpers');
 var support = require('../../lib/support');
@@ -2912,7 +2919,10 @@ Partials.prototype.preload = function(callback){
 };
 
 module.exports = Partials;
-},{"../lib/loader.js":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../lib/support.js":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"/home/jdarling/rock/examples/web/web/src/lib/support.js":[function(require,module,exports){
+},{"../lib/loader.js":"/home/jdarling/rock/examples/web/web/src/lib/loader.js","../lib/support.js":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"/home/jdarling/rock/examples/web/web/src/lib/sockets.js":[function(require,module,exports){
+module.exports = io();
+
+},{}],"/home/jdarling/rock/examples/web/web/src/lib/support.js":[function(require,module,exports){
 module.exports = {
   el: function(src, sel){
     if(!sel){
