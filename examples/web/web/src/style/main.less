@@ -81,6 +81,53 @@
   z-index: 99;
 }
 
+.tooltip.left:hover:after{
+  background: #333;
+  background: rgba(0,0,0,.8);
+  border-radius: 5px;
+  bottom: -50%;
+  color: #fff;
+  content: attr(tip);
+  left: -250px;
+  padding: 5px 15px;
+  position: absolute;
+  z-index: 98;
+  width: 220px;
+}
+.tooltip.left:hover:before{
+  border: solid transparent;
+  border-width: 6px 0 6px 6px;
+  bottom: 0px;
+  content: "";
+  left: 0;
+  position: absolute;
+  z-index: 99;
+  border-left-color: #333;
+}
+
+.tooltip.right:hover:after{
+  background: #333;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  bottom: -50%;
+  color: #fff;
+  content: attr(tip);
+  left: 100%;
+  padding: 5px 15px;
+  position: absolute;
+  z-index: 98;
+}
+.tooltip.right:hover:before{
+  border: solid transparent;
+  border-width: 6px 6px 6px 0px;
+  bottom: 15%;
+  content: "";
+  right: 0;
+  position: absolute;
+  z-index: 99;
+  border-right-color: #333;
+}
+
 .ink-form{
   select{
     padding: 0px;
@@ -139,4 +186,93 @@ footer{
 
 a{
   text-decoration: none;
+}
+
+.gpio{
+  margin-top: 50px;
+  [data-highlight]{
+    cursor: pointer;
+  }
+  .listing{
+    height: 600px;
+    max-width: 400px;
+    float: left;
+    clear: none;
+    overflow: auto;
+  }
+  .board{
+    width: 800px;
+    height: 600px;
+    border: 1px solid black;
+    background: green;
+    float: left;
+    .header{
+      width: 50px; height: 502px; border: 1px solid black; background: white;
+      margin-top: 0px;
+      display: inline-block;
+    }
+    .header.left{
+      margin-left: 50px;
+    }
+    .header.right{
+      margin-left: 600px;
+    }
+    .pin{
+      width: 24px;
+      height: 25px;
+      float: left;
+      text-align: center;
+      border: 1px dotted silver;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+    .pin.value-{
+      background: white;
+      color: black;
+      border: none;
+    }
+    .pin.value-1{
+      background: lime;
+      color: black;
+      border: none;
+    }
+    .pin.value-0{
+      background: gray;
+      color: black;
+      border: none;
+    }
+    .pin.unavailable{
+      background: silver;
+    }
+    .pin.power{
+      background: red;
+      color: white;
+      border: none;
+    }
+    .pin.ground{
+      background: black;
+      color: white;
+      border: none;
+    }
+    .labels{
+      color: black;
+      height: 25px;
+    }
+    .labels.top{
+      margin-top: 25px;
+    }
+    .labels div{
+      display: inline-block;
+    }
+    .labels .left{
+      margin-left: 65px;
+    }
+    .labels .right{
+      margin-left: 610px;
+    }
+    .highlight .pin{
+      background: orange;
+    }
+  }
 }

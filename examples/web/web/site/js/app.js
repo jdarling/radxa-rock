@@ -408,6 +408,42 @@ CodeMirrorController.prototype.teardown = function(){
 
 controllers.register('CodeMirror', CodeMirrorController);
 
+},{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/highlight.js":[function(require,module,exports){
+var controllers = require('../../lib/controllers.js');
+var support = require('../../lib/support');
+var el = support.el;
+var els = support.els;
+
+var HighlightController = function(container, data){
+  var self = this;
+  var overHandler = self.overHandler = function(e){
+    if(e.target && e.target.dataset.highlight){
+      var elems = els(container, e.target.dataset.highlight);
+      elems.forEach(function(elem){
+        elem.className = (elem.className+' highlight').trim();
+      });
+    }
+  };
+  var outHandler = self.overHandler = function(e){
+    if(e.target && e.target.dataset.highlight){
+      var elems = els(container, '.highlight');
+      elems.forEach(function(elem){
+        elem.className = (elem.className.replace(/(\s|^)highlight(\s|$)/, ' ')).trim();
+      });
+    }
+  };
+  container.addEventListener('mouseover', overHandler);
+  container.addEventListener('mouseout', outHandler);
+};
+
+HighlightController.prototype.teardown = function(container){
+  var self = this;
+  container.addEventListener('mouseover', self.overHandler);
+  container.addEventListener('mouseout', self.outHandler);
+};
+
+controllers.register('Highlight', HighlightController);
+
 },{"../../lib/controllers.js":"/home/jdarling/rock/examples/web/web/src/lib/controllers.js","../../lib/support":"/home/jdarling/rock/examples/web/web/src/lib/support.js"}],"./web/src/js/controllers/markdown.js":[function(require,module,exports){
 var controllers = require('../../lib/controllers.js');
 var Support = require('../../lib/support.js');
@@ -3123,4 +3159,4 @@ module.exports = {
   }
 };
 
-},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/codemirror.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js","./web/src/js/controllers/pinfilter.js","./web/src/js/controllers/scripteditor.js"]);
+},{}]},{},["./web/src/js/app.js","./web/src/js/controllers/charts/barchartcontroller.js","./web/src/js/controllers/charts/linechartcontroller.js","./web/src/js/controllers/charts/mindmapcontroller.js","./web/src/js/controllers/charts/piechartcontroller.js","./web/src/js/controllers/charts/scatterchartcontroller.js","./web/src/js/controllers/charts/tableviewcontroller.js","./web/src/js/controllers/codemirror.js","./web/src/js/controllers/highlight.js","./web/src/js/controllers/markdown.js","./web/src/js/controllers/pincontroller.js","./web/src/js/controllers/pinfilter.js","./web/src/js/controllers/scripteditor.js"]);

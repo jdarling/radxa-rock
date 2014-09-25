@@ -74,6 +74,51 @@
   position: absolute;
   z-index: 99;
 }
+.tooltip.left:hover:after {
+  background: #333;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  bottom: -50%;
+  color: #fff;
+  content: attr(tip);
+  left: -250px;
+  padding: 5px 15px;
+  position: absolute;
+  z-index: 98;
+  width: 220px;
+}
+.tooltip.left:hover:before {
+  border: solid transparent;
+  border-width: 6px 0 6px 6px;
+  bottom: 0px;
+  content: "";
+  left: 0;
+  position: absolute;
+  z-index: 99;
+  border-left-color: #333;
+}
+.tooltip.right:hover:after {
+  background: #333;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  bottom: -50%;
+  color: #fff;
+  content: attr(tip);
+  left: 100%;
+  padding: 5px 15px;
+  position: absolute;
+  z-index: 98;
+}
+.tooltip.right:hover:before {
+  border: solid transparent;
+  border-width: 6px 6px 6px 0px;
+  bottom: 15%;
+  content: "";
+  right: 0;
+  position: absolute;
+  z-index: 99;
+  border-right-color: #333;
+}
 .ink-form select {
   padding: 0px;
 }
@@ -123,4 +168,95 @@ footer {
 }
 a {
   text-decoration: none;
+}
+.gpio {
+  margin-top: 50px;
+}
+.gpio [data-highlight] {
+  cursor: pointer;
+}
+.gpio .listing {
+  height: 600px;
+  max-width: 400px;
+  float: left;
+  clear: none;
+  overflow: auto;
+}
+.gpio .board {
+  width: 800px;
+  height: 600px;
+  border: 1px solid black;
+  background: green;
+  float: left;
+}
+.gpio .board .header {
+  width: 50px;
+  height: 502px;
+  border: 1px solid black;
+  background: white;
+  margin-top: 0px;
+  display: inline-block;
+}
+.gpio .board .header.left {
+  margin-left: 50px;
+}
+.gpio .board .header.right {
+  margin-left: 600px;
+}
+.gpio .board .pin {
+  width: 24px;
+  height: 25px;
+  float: left;
+  text-align: center;
+  border: 1px dotted silver;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.gpio .board .pin.value- {
+  background: white;
+  color: black;
+  border: none;
+}
+.gpio .board .pin.value-1 {
+  background: lime;
+  color: black;
+  border: none;
+}
+.gpio .board .pin.value-0 {
+  background: gray;
+  color: black;
+  border: none;
+}
+.gpio .board .pin.unavailable {
+  background: silver;
+}
+.gpio .board .pin.power {
+  background: red;
+  color: white;
+  border: none;
+}
+.gpio .board .pin.ground {
+  background: black;
+  color: white;
+  border: none;
+}
+.gpio .board .labels {
+  color: black;
+  height: 25px;
+}
+.gpio .board .labels.top {
+  margin-top: 25px;
+}
+.gpio .board .labels div {
+  display: inline-block;
+}
+.gpio .board .labels .left {
+  margin-left: 65px;
+}
+.gpio .board .labels .right {
+  margin-left: 610px;
+}
+.gpio .board .highlight .pin {
+  background: orange;
 }

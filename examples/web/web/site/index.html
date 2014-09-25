@@ -84,171 +84,107 @@
   <textarea data-controller="CodeMirror">{{this}}</textarea>
 </div>
 </script>
-    <script type="text/x-template" id="gpio" data-api="/api/v1/pins" nav="gpio"><style>
-.board{
-  width: 800px; height: 600px; border: 1px solid black; background: green;
-  margin: auto;
-}
-.header{
-  width: 50px; height: 502px; border: 1px solid black; background: white;
-  margin-top: 0px;
-  display: inline-block;
-  clear: both;
-}
-.header.left{
-  margin-left: 50px;
-}
-.header.right{
-  margin-left: 600px;
-}
-.pin{
-  width: 24px;
-  height: 25px;
-  float: left;
-  text-align: center;
-  border: 1px dotted silver;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-}
-.pin.value-{
-  background: white;
-  color: black;
-  border: none;
-}
-.pin.value-1{
-  background: lime;
-  color: black;
-  border: none;
-}
-.pin.value-0{
-  background: gray;
-  color: black;
-  border: none;
-}
-.pin.unavailable{
-  background: silver;
-}
-.pin.power{
-  background: red;
-  color: white;
-  border: none;
-}
-.pin.ground{
-  background: black;
-  color: white;
-  border: none;
-}
-.labels{
-  color: black;
-  height: 25px;
-}
-.labels.top{
-  margin-top: 25px;
-}
-.labels div{
-  display: inline-block;
-}
-.labels .left{
-  margin-left: 65px;
-}
-.labels .right{
-  margin-left: 610px;
-}
-</style>
-<h1>GPIO Overview</h1>
-<div class="board">
-  <div class="labels top">
-    <div class="left">J8</div>
-    <div class="right">J12/15</div>
+    <script type="text/x-template" id="gpio" data-api="/api/v1/pins" nav="gpio"><div class="ink-grid gpio" data-controller="Highlight">
+  <div class="listing">
+    <dl>
+    {{#each this}}
+      <dt data-highlight="[data-pin='{{pin}}']">GPIO {{pin}}</dt><dd class="gpio-info" data-highlight="[data-pin='{{pin}}']">{{join names ', '}}</dd>
+    {{/each}}
+    </dl>
   </div>
-  <div class="header left">
-    <span tip="GND" class="pin ground tooltip left">1</span>
-    <span tip="VCC-5V" class="pin power tooltip right">2</span>
-    <span tip="HOST_DP2" class="pin unavailable tooltip left">3</span>
-    <span tip="HOST_DM2" class="pin unavailable tooltip right">4</span>
-    <span tip="LINE Left" class="pin unavailable tooltip left">5</span>
-    <span tip="LINE Right" class="pin unavailable tooltip right">6</span>
-    <span data-controller="PinController" data-pin="167"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">7</span></span>
-    <span data-controller="PinController" data-pin="166"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">8</span></span>
-    <span data-controller="PinController" data-pin="169"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">9</span></span>
-    <span data-controller="PinController" data-pin="161"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">10</span></span>
-    <span data-controller="PinController" data-pin="285"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">11</span></span>
-    <span data-controller="PinController" data-pin="284"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">12</span></span>
-    <span data-controller="PinController" data-pin="192"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">13</span></span>
-    <span data-controller="PinController" data-pin="193"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">14</span></span>
-    <span data-controller="PinController" data-pin="194"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">15</span></span>
-    <span data-controller="PinController" data-pin="195"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">16</span></span>
-    <span tip="GND" class="pin ground tooltip left">17</span>
-    <span tip="VCC-2.8V" class="pin power tooltip right">18</span>
-    <span data-controller="PinController" data-pin="191"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">19</span></span>
-    <span data-controller="PinController" data-pin="205"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">20</span></span>
-    <span data-controller="PinController" data-pin="188"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">21</span></span>
-    <span data-controller="PinController" data-pin="202"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">22</span></span>
-    <span data-controller="PinController" data-pin="190"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">23</span></span>
-    <span data-controller="PinController" data-pin="203"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">24</span></span>
-    <span tip="ANI2" class="pin unavailable tooltip left">25</span>
-    <span data-controller="PinController" data-pin="204"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">26</span></span>
-    <span data-controller="PinController" data-pin="165"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">27</span></span>
-    <span data-controller="PinController" data-pin="189"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">28</span></span>
-    <span tip="GND" class="pin ground tooltip left">29</span>
-    <span tip="VCCIO_WL" class="pin unavailable tooltip left">30</span>
-    <span data-controller="PinController" data-pin="217"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">31</span></span>
-    <span data-controller="PinController" data-pin="216"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">32</span></span>
-    <span tip="ANI0" class="pin unavailable tooltip left">33</span>
-    <span tip="ANI1" class="pin unavailable tooltip right">34</span>
-    <span tip="POWER_SW" class="pin unavailable tooltip left">35</span>
-    <span tip="PWR_EN" class="pin unavailable tooltip right">36</span>
-    <span tip="HSIC_DATA" class="pin unavailable tooltip left">37</span>
-    <span tip="HSIC_STROBE" class="pin unavailable tooltip right">38</span>
-    <span tip="GND" class="pin ground tooltip left">39</span>
-    <span tip="VDD-5V" class="pin power tooltip right">40</span>
-  </div>
-  <div class="header right">
-    <span tip="GND" class="pin ground tooltip left">1</span>
-    <span data-controller="PinController" data-pin="224"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">2</span></span>
-    <span data-controller="PinController" data-pin="225"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">3</span></span>
-    <span data-controller="PinController" data-pin="226"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">4</span></span>
-    <span data-controller="PinController" data-pin="227"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">5</span></span>
-    <span data-controller="PinController" data-pin="228"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">6</span></span>
-    <span data-controller="PinController" data-pin="229"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">7</span></span>
-    <span data-controller="PinController" data-pin="230"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">8</span></span>
-    <span data-controller="PinController" data-pin="231"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">9</span></span>
-    <span data-controller="PinController" data-pin="232"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">10</span></span>
-    <span data-controller="PinController" data-pin="233"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">11</span></span>
-    <span data-controller="PinController" data-pin="234"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">12</span></span>
-    <span data-controller="PinController" data-pin="235"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">13</span></span>
-    <span data-controller="PinController" data-pin="236"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">14</span></span>
-    <span data-controller="PinController" data-pin="237"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">15</span></span>
-    <span data-controller="PinController" data-pin="238"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">16</span></span>
-    <span data-controller="PinController" data-pin="239"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">17</span></span>
-    <span data-controller="PinController" data-pin="240"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">18</span></span>
-    <span data-controller="PinController" data-pin="241"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">19</span></span>
-    <span data-controller="PinController" data-pin="242"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">20</span></span>
-    <span data-controller="PinController" data-pin="243"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">21</span></span>
-    <span data-controller="PinController" data-pin="244"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">22</span></span>
-    <span data-controller="PinController" data-pin="245"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">23</span></span>
-    <span data-controller="PinController" data-pin="246"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">24</span></span>
-    <span data-controller="PinController" data-pin="247"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">25</span></span>
-    <span data-controller="PinController" data-pin="250"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">26</span></span>
-    <span data-controller="PinController" data-pin="251"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">27</span></span>
-    <span data-controller="PinController" data-pin="249"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">28</span></span>
-    <span tip="GND" class="pin ground tooltip left">29</span>
-    <span data-controller="PinController" data-pin="248"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">30</span></span>
-    <span data-controller="PinController" data-pin="168"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">31</span></span>
-    <span data-controller="PinController" data-pin="162"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">32</span></span>
-    <span data-controller="PinController" data-pin="286"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">33</span></span>
-    <span data-controller="PinController" data-pin="207"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">34</span></span>
-    <span data-controller="PinController" data-pin="199"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">35</span></span>
-    <span data-controller="PinController" data-pin="196"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">36</span></span>
-    <span data-controller="PinController" data-pin="198"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">37</span></span>
-    <span data-controller="PinController" data-pin="197"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">38</span></span>
-    <span tip="VCC-5V" class="pin power tooltip left">39</span>
-    <span tip="GND" class="pin ground tooltip right">40</span>
-  </div>
-  <div class="labels bottom">
-    <div class="left">J8</div>
-    <div class="right">J12/15</div>
+  <div class="board">
+    <div class="labels top">
+      <div class="left">J8</div>
+      <div class="right">J12/15</div>
+    </div>
+    <div class="header left">
+      <span tip="GND" class="pin ground tooltip left">1</span>
+      <span tip="VCC-5V" class="pin power tooltip right">2</span>
+      <span tip="HOST_DP2" class="pin unavailable tooltip left">3</span>
+      <span tip="HOST_DM2" class="pin unavailable tooltip right">4</span>
+      <span tip="LINE Left" class="pin unavailable tooltip left">5</span>
+      <span tip="LINE Right" class="pin unavailable tooltip right">6</span>
+      <span data-controller="PinController" data-pin="167"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">7</span></span>
+      <span data-controller="PinController" data-pin="166"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">8</span></span>
+      <span data-controller="PinController" data-pin="169"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">9</span></span>
+      <span data-controller="PinController" data-pin="161"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">10</span></span>
+      <span data-controller="PinController" data-pin="285"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">11</span></span>
+      <span data-controller="PinController" data-pin="284"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">12</span></span>
+      <span data-controller="PinController" data-pin="192"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">13</span></span>
+      <span data-controller="PinController" data-pin="193"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">14</span></span>
+      <span data-controller="PinController" data-pin="194"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">15</span></span>
+      <span data-controller="PinController" data-pin="195"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">16</span></span>
+      <span tip="GND" class="pin ground tooltip left">17</span>
+      <span tip="VCC-2.8V" class="pin power tooltip right">18</span>
+      <span data-controller="PinController" data-pin="191"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">19</span></span>
+      <span data-controller="PinController" data-pin="205"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">20</span></span>
+      <span data-controller="PinController" data-pin="188"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">21</span></span>
+      <span data-controller="PinController" data-pin="202"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">22</span></span>
+      <span data-controller="PinController" data-pin="190"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">23</span></span>
+      <span data-controller="PinController" data-pin="203"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">24</span></span>
+      <span tip="ANI2" class="pin unavailable tooltip left">25</span>
+      <span data-controller="PinController" data-pin="204"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">26</span></span>
+      <span data-controller="PinController" data-pin="165"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">27</span></span>
+      <span data-controller="PinController" data-pin="189"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">28</span></span>
+      <span tip="GND" class="pin ground tooltip left">29</span>
+      <span tip="VCCIO_WL" class="pin unavailable tooltip left">30</span>
+      <span data-controller="PinController" data-pin="217"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">31</span></span>
+      <span data-controller="PinController" data-pin="216"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">32</span></span>
+      <span tip="ANI0" class="pin unavailable tooltip left">33</span>
+      <span tip="ANI1" class="pin unavailable tooltip right">34</span>
+      <span tip="POWER_SW" class="pin unavailable tooltip left">35</span>
+      <span tip="PWR_EN" class="pin unavailable tooltip right">36</span>
+      <span tip="HSIC_DATA" class="pin unavailable tooltip left">37</span>
+      <span tip="HSIC_STROBE" class="pin unavailable tooltip right">38</span>
+      <span tip="GND" class="pin ground tooltip left">39</span>
+      <span tip="VDD-5V" class="pin power tooltip right">40</span>
+    </div>
+    <div class="header right">
+      <span tip="GND" class="pin ground tooltip left">1</span>
+      <span data-controller="PinController" data-pin="224"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">2</span></span>
+      <span data-controller="PinController" data-pin="225"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">3</span></span>
+      <span data-controller="PinController" data-pin="226"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">4</span></span>
+      <span data-controller="PinController" data-pin="227"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">5</span></span>
+      <span data-controller="PinController" data-pin="228"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">6</span></span>
+      <span data-controller="PinController" data-pin="229"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">7</span></span>
+      <span data-controller="PinController" data-pin="230"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">8</span></span>
+      <span data-controller="PinController" data-pin="231"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">9</span></span>
+      <span data-controller="PinController" data-pin="232"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">10</span></span>
+      <span data-controller="PinController" data-pin="233"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">11</span></span>
+      <span data-controller="PinController" data-pin="234"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">12</span></span>
+      <span data-controller="PinController" data-pin="235"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">13</span></span>
+      <span data-controller="PinController" data-pin="236"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">14</span></span>
+      <span data-controller="PinController" data-pin="237"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">15</span></span>
+      <span data-controller="PinController" data-pin="238"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">16</span></span>
+      <span data-controller="PinController" data-pin="239"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">17</span></span>
+      <span data-controller="PinController" data-pin="240"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">18</span></span>
+      <span data-controller="PinController" data-pin="241"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">19</span></span>
+      <span data-controller="PinController" data-pin="242"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">20</span></span>
+      <span data-controller="PinController" data-pin="243"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">21</span></span>
+      <span data-controller="PinController" data-pin="244"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">22</span></span>
+      <span data-controller="PinController" data-pin="245"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">23</span></span>
+      <span data-controller="PinController" data-pin="246"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">24</span></span>
+      <span data-controller="PinController" data-pin="247"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">25</span></span>
+      <span data-controller="PinController" data-pin="250"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">26</span></span>
+      <span data-controller="PinController" data-pin="251"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">27</span></span>
+      <span data-controller="PinController" data-pin="249"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">28</span></span>
+      <span tip="GND" class="pin ground tooltip left">29</span>
+      <span data-controller="PinController" data-pin="248"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">30</span></span>
+      <span data-controller="PinController" data-pin="168"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">31</span></span>
+      <span data-controller="PinController" data-pin="162"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">32</span></span>
+      <span data-controller="PinController" data-pin="286"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">33</span></span>
+      <span data-controller="PinController" data-pin="207"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">34</span></span>
+      <span data-controller="PinController" data-pin="199"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">35</span></span>
+      <span data-controller="PinController" data-pin="196"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">36</span></span>
+      <span data-controller="PinController" data-pin="198"><span class="pin tooltip value-\{{value}} {{mode}} left" tip="\{{join names ', '}}">37</span></span>
+      <span data-controller="PinController" data-pin="197"><span class="pin tooltip value-\{{value}} {{mode}} right" tip="\{{join names ', '}}">38</span></span>
+      <span tip="VCC-5V" class="pin power tooltip left">39</span>
+      <span tip="GND" class="pin ground tooltip right">40</span>
+    </div>
+    <div class="labels bottom">
+      <div class="left">J8</div>
+      <div class="right">J12/15</div>
+    </div>
   </div>
 </div>
 </script>
