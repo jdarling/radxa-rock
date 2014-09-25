@@ -30,7 +30,8 @@ var loadLib = function(libFile){
 
 plugger.load(function(err, plugins){
   if(err){
-    console.log(err);
+    console.error(err.stack||err);
+    process.exit(1);
   }
   async.eachSeries(plugins, function(plugin, next){
     try{
