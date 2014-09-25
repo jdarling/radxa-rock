@@ -1,6 +1,7 @@
 // Put your source here
 
-var pin = rock.pin(J12_P37);
+var pin = rock.pin(J12_P38);
+rock.pin(J12_P37).mode('input');
 var toggle = function(duration){
       return function(next){
         pin.set(1, function(){
@@ -43,21 +44,21 @@ servo.nextTick = function(){
 };
 servo.checkTick = function(){
   var self = this;
-  var timeSpent = getNanoSeconds(self.lastTick);
+  var timeSpent = Math.floor(getNanoSeconds(self.lastTick)/1000);
   if(timeSpent<1500){
-    return servo.set(1, function(){
+    return self.set(1, function(){
       self.nextTick();
     });
   }
   if(timeSpent<self.FRAME_SIZE){
-    return servo.set(0, function(){
+    return self.set(0, function(){
       self.nextTick();
     });
   }
-  servo.numFrames--;
-  if(servo.numFrames>0){
-    servo.lastTick = process.hrtime();
-    nextTick();
+  self.numFrames--;
+  if(self.numFrames>0){
+    self.lastTick = process.hrtime();
+    self.nextTick();
   }
 };
 servo.mode('output', function(){
