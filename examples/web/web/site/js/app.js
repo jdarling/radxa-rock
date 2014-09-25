@@ -482,7 +482,17 @@ var sockets = require('../../lib/sockets');
 
 var PinController = function(container, data){
   var self = this;
-  var idx = container.dataset.index;
+  var findPin = function(pinNumber){
+    var i=0, l=data.length;
+    while(i<l){
+      if(data[i].pin === pinNumber){
+        return i;
+      }
+      i++;
+    }
+    return -1;
+  };
+  var idx = container.dataset.index||findPin(+container.dataset.pin);
   var template = Handlebars.compile(container.innerHTML);
   var oldValue, pin;
   var refresh = function(data){
@@ -507,12 +517,13 @@ var PinController = function(container, data){
   container.addEventListener('change', changeHandler);
   refresh(data[idx]);
   sockets.on('pin'+pin.pin+':change', pinChanged);
+  self.pin = pin.pin;
 };
 
 PinController.prototype.teardown = function(container){
   var self = this;
   container.removeEventListener('change', self.changeHandler);
-  sockets.removeListener('pin'+pin.pin+':change', self.pinChanged);
+  sockets.removeListener('pin'+self.pin+':change', self.pinChanged);
 };
 
 controllers.register('PinController', PinController);
