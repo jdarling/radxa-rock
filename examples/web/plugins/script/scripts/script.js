@@ -31,3 +31,36 @@ var next = function(){
 pin.mode('output', function(){
   next();
 });
+
+var servo = rock.pin(GPIO199);
+servo.numFrames = 100;
+servo.FRAME_SIZE= 10000;
+servo.nextTick = function(){
+  var self = this;
+  process.nextTick(function(){
+    self.checkTick();
+  });
+};
+servo.checkTick = function(){
+  var self = this;
+  var timeSpent = getNanoSeconds(self.lastTick);
+  if(timeSpent<1500){
+    return servo.set(1, function(){
+      self.nextTick();
+    });
+  }
+  if(timeSpent<self.FRAME_SIZE){
+    return servo.set(0, function(){
+      self.nextTick();
+    });
+  }
+  servo.numFrames--;
+  if(servo.numFrames>0){
+    servo.lastTick = process.hrtime();
+    nextTick();
+  }
+};
+servo.mode('output', function(){
+  servo.lastTick = process.hrtime();
+  servo.checkTick();
+});

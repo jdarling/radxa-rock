@@ -13,14 +13,14 @@ var SOURCE = '// Put your source here\n\n'+
       '});\n';
 
 var getNanoSeconds = (function(){
-  var getNanoSeconds = function getNanoSeconds(){
-      hr = process.hrtime();
+  var loadTime = process.hrtime();
+  var getNanoSeconds = function getNanoSeconds(from){
+      hr = process.hrtime(from||loadTime);
       return hr[0] * 1e9 + hr[1];
     };
-  var loadTime = getNanoSeconds();
   return function(from){
-    var v = (getNanoSeconds()-loadTime) / 1e6;
-    return from?v-from:v;
+    var v = getNanoSeconds(from);
+    return v;
   };
 })();
 
