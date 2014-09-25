@@ -12,6 +12,18 @@ var SOURCE = '// Put your source here\n\n'+
       '  });\n'+
       '});\n';
 
+var getNanoSeconds = (function(){
+  var getNanoSeconds = function getNanoSeconds(){
+      hr = process.hrtime();
+      return hr[0] * 1e9 + hr[1];
+    };
+  var loadTime = getNanoSeconds();
+  return function(from){
+    var v = (getNanoSeconds()-loadTime) / 1e6;
+    return from?v-from:v;
+  };
+})();
+
 var getScript = function(req, reply){
   fs.readFile(__dirname+'/scripts/script.js', function(err, script){
     if(err){
@@ -47,7 +59,10 @@ var executeScript = function(req, reply){
   var source = req.payload;
   var sandbox = {
     rock: rock,
-    setTimeout: setTimeout
+    setTimeout: setTimeout,
+    process: process,
+    require: require,
+    getNanoSeconds: getNanoSeconds
   };
   var keys = Object.keys(CONST);
   keys.forEach(function(key){
