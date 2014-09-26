@@ -16,7 +16,8 @@ var routeConfig = {
         }else{
           return cb(null, req.query.url);
         }
-      }
+      },
+      passThrough: true
     }
   }
 };
