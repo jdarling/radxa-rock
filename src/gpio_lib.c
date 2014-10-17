@@ -53,7 +53,7 @@ struct rockchip_pin_ctrl *rkxx_pin_ctrl = &rk3188_pin_ctrl;
  * given a pin number that is local to a pin controller, find out the pin bank
  * and the register base of the pin bank.
  */
-static struct rockchip_pin_bank *pin_to_bank(unsigned pin)
+static struct rockchip_pin_bank *pin_to_bank(int pin)
 {
   struct rockchip_pin_bank *b = rkxx_pin_ctrl->pin_banks;
 
@@ -95,8 +95,9 @@ static int map_reg(void *reg, void **reg_mapped)
 }
 
 int rockchip_gpio_init(void) {
-  int grf_offs, pmu_offs, i, j;
+  int grf_offs, pmu_offs, j;
   int ret;
+  unsigned int i;
 
   struct rockchip_pin_ctrl *ctrl = rkxx_pin_ctrl;
   struct rockchip_pin_bank *bank = ctrl->pin_banks;
