@@ -33,6 +33,24 @@ Handle<Value> SayHello(const Arguments& args) {
   return scope.Close(String::New("Hello from Rock!"));
 }
 
+Handle<Value> PinBankInfo(const Arguments& args) {
+  HandleScope scope;
+
+  if(args.Length() < 1){
+    ThrowException(Exception::TypeError(String::New("Expects 1 argument (bankNumber)")));
+    return scope.Close(Undefined());
+  }
+
+  if(!args[0]->IsNumber()){
+    ThrowException(Exception::TypeError(String::New("First argument must be an Integer")));
+    return scope.Close(Undefined());
+  }
+
+  int bank_number = (int)(args[0]->Int32Value());
+
+  return scope.Close(Number::New(pin_bank_info(bank_number).pin_base));
+}
+
 Handle<Value> Init(const Arguments& args) {
   HandleScope scope;
   if(rockchip_gpio_init() < 0){
@@ -74,7 +92,7 @@ Handle<Value> GetPinValue(const Arguments& args) {
   HandleScope scope;
 
   if(args.Length() < 1){
-    ThrowException(Exception::TypeError(String::New("Expects 2 arguments (pin, value)")));
+    ThrowException(Exception::TypeError(String::New("Expects 1 argument (pin)")));
     return scope.Close(Undefined());
   }
 
@@ -94,7 +112,7 @@ Handle<Value> GetPinValue(const Arguments& args) {
   return scope.Close(Number::New(ret));
 }
 
-Handle<Value> SetPinMux(const Arguments& args) {
+Handle<Value> SetPinMode(const Arguments& args) {
   HandleScope scope;
 
   if(args.Length() < 2){
@@ -116,14 +134,14 @@ Handle<Value> SetPinMux(const Arguments& args) {
   int value = (int)(args[1]->Int32Value());
 
   if(rockchip_gpio_set_mux(pin, value) < 0){
-    ThrowException(Exception::TypeError(String::New("Could not set mux on port")));
+    ThrowException(Exception::TypeError(String::New("Could not set mode of pin")));
     return scope.Close(Undefined());
   }
 
   return scope.Close(Number::New(1));
 }
 
-Handle<Value> GetPinMux(const Arguments& args) {
+Handle<Value> GetPinMode(const Arguments& args) {
   HandleScope scope;
 
   if(args.Length() < 1){
@@ -140,7 +158,7 @@ Handle<Value> GetPinMux(const Arguments& args) {
   int ret = rockchip_gpio_get_mux(pin);
 
   if(ret < 0){
-    ThrowException(Exception::TypeError(String::New("Could not get mux on port")));
+    ThrowException(Exception::TypeError(String::New("Could not get mode of pin")));
     return scope.Close(Undefined());
   }
 
@@ -183,14 +201,17 @@ void init(Handle<Object> exports) {
       FunctionTemplate::New(SetPinValue)->GetFunction());
   exports->Set(String::NewSymbol("get_pin_value"),
       FunctionTemplate::New(GetPinValue)->GetFunction());
-  exports->Set(String::NewSymbol("set_pin_mux"),
-      FunctionTemplate::New(SetPinMux)->GetFunction());
-  exports->Set(String::NewSymbol("get_pin_mux"),
-      FunctionTemplate::New(GetPinMux)->GetFunction());
+  exports->Set(String::NewSymbol("set_pin_mode"),
+      FunctionTemplate::New(SetPinMode)->GetFunction());
+  exports->Set(String::NewSymbol("get_pin_mode"),
+      FunctionTemplate::New(GetPinMode)->GetFunction());
   exports->Set(String::NewSymbol("set_pin_pullup"),
       FunctionTemplate::New(SetPinPullup)->GetFunction());
   exports->Set(String::NewSymbol("say_hello"),
       FunctionTemplate::New(SayHello)->GetFunction());
+
+  exports->Set(String::NewSymbol("get_bank_info"),
+      FunctionTemplate::New(PinBankInfo)->GetFunction());
 }
 
 NODE_MODULE(gpio, init)

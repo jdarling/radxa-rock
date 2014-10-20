@@ -63,6 +63,17 @@ static struct rockchip_pin_bank *pin_to_bank(int pin)
   return b;
 }
 
+struct rockchip_pin_bank pin_bank_info(int bank_num){
+  struct rockchip_pin_bank *bank = rkxx_pin_ctrl->pin_banks;
+  int i=0;
+  while(i<bank_num){
+    i++;
+    bank++;
+  }
+  return *bank;
+}
+
+
 /* map reg to access */
 static int map_reg(void *reg, void **reg_mapped)
 {

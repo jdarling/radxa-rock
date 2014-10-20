@@ -16,11 +16,11 @@
 extern "C" {
 #endif
 
-#define E_MEM_OPEN			612
-#define E_MEM_MAP			613
-#define E_MUX_INVAL			614
-#define E_MUX_UNROUTED		614
-#define E_MUX_GPIOONLY		615
+#define E_MEM_OPEN      612
+#define E_MEM_MAP       613
+#define E_MUX_INVAL     614
+#define E_MUX_UNROUTED  614
+#define E_MUX_GPIOONLY  615
 
 #define RK_GPIO0  0
 #define RK_GPIO1  1
@@ -29,29 +29,29 @@ extern "C" {
 #define RK_GPIO4  4
 #define RK_GPIO6  6
 
-#define RK_FUNC_GPIO  0
+#define RK_FUNC_GPIO 0
 #define RK_FUNC_1    1
 #define RK_FUNC_2    2
 
-#define ROCKCHIP_GPIO_INPUT    1
+#define ROCKCHIP_GPIO_INPUT   1
 #define ROCKCHIP_GPIO_OUTPUT  0
 
 #define ROCKCHIP_PULL_UP    0
-#define ROCKCHIP_PULL_DOWN    1
+#define ROCKCHIP_PULL_DOWN  1
 
 /* GPIO control registers */
-#define GPIO_SWPORT_DR    0x00
-#define GPIO_SWPORT_DDR    0x04
-#define GPIO_INTEN      0x30
-#define GPIO_INTMASK    0x34
+#define GPIO_SWPORT_DR      0x00
+#define GPIO_SWPORT_DDR     0x04
+#define GPIO_INTEN          0x30
+#define GPIO_INTMASK        0x34
 #define GPIO_INTTYPE_LEVEL  0x38
-#define GPIO_INT_POLARITY  0x3c
-#define GPIO_INT_STATUS    0x40
+#define GPIO_INT_POLARITY   0x3c
+#define GPIO_INT_STATUS     0x40
 #define GPIO_INT_RAWSTATUS  0x44
-#define GPIO_DEBOUNCE    0x48
-#define GPIO_PORTS_EOI    0x4c
-#define GPIO_EXT_PORT    0x50
-#define GPIO_LS_SYNC    0x60
+#define GPIO_DEBOUNCE       0x48
+#define GPIO_PORTS_EOI      0x4c
+#define GPIO_EXT_PORT       0x50
+#define GPIO_LS_SYNC        0x60
 
 #define BIT(nr) (1UL << (nr))
 
@@ -59,9 +59,9 @@ extern "C" {
  * Encode variants of iomux registers into a type variable
  */
 #define IOMUX_GPIO_ONLY    BIT(0)
-#define IOMUX_WIDTH_4BIT  BIT(1)
-#define IOMUX_SOURCE_PMU  BIT(2)
-#define IOMUX_UNROUTED    BIT(3)
+#define IOMUX_WIDTH_4BIT   BIT(1)
+#define IOMUX_SOURCE_PMU   BIT(2)
+#define IOMUX_UNROUTED     BIT(3)
 
 /**
  * @type: iomux variant using IOMUX_* constants
@@ -164,6 +164,8 @@ static inline void __raw_writel(unsigned int b, volatile void *addr)
 #endif
 
 #define writel(b,addr) __raw_writel(b,addr)
+
+struct rockchip_pin_bank pin_bank_info(int bank_num);
 
 int rockchip_gpio_init(void);
 int rockchip_gpio_input(unsigned int pin);
