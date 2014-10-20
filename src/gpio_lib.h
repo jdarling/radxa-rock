@@ -12,6 +12,10 @@
 #ifndef _GPIO_LIB_H_
 #define _GPIO_LIB_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define E_MEM_OPEN			612
 #define E_MEM_MAP			613
 #define E_MUX_INVAL			614
@@ -167,5 +171,9 @@ int rockchip_gpio_output(unsigned int pin, unsigned int val);
 int rockchip_gpio_set_mux(unsigned int pin, unsigned int mux);
 int rockchip_gpio_get_mux(unsigned int pin);
 int rockchip_gpio_pullup(unsigned int pin, unsigned int pull);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _GPIO_LIB_H_ */
