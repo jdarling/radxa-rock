@@ -202,8 +202,8 @@ int rockchip_gpio_set_mux(unsigned int pin, unsigned int mux) {
   unsigned char bit;
   void *reg_mapped_base;
 
-  if (iomux_num > 3)
-    return -E_MUX_INVAL;
+  //if (iomux_num > 3)
+  //  return -E_MUX_INVAL;
 
   if (bank->iomux[iomux_num].type & IOMUX_UNROUTED) {
     return -E_MUX_UNROUTED;
@@ -247,8 +247,8 @@ int rockchip_gpio_get_mux(unsigned int pin) {
   unsigned char bit;
   void *reg_mapped_base;
 
-  if (iomux_num > 3)
-    return -E_MUX_INVAL;
+  //if (iomux_num > 3)
+  //  return -E_MUX_INVAL;
 
   if (bank->iomux[iomux_num].type & IOMUX_UNROUTED) {
     return -E_MUX_UNROUTED;
